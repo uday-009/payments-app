@@ -1,32 +1,78 @@
-import React from 'react'
-import Heading from '../components/Heading'
+import React, { useEffect, useState } from "react";
+import Heading from "../components/Heading";
+import { InputBox } from "../components/InputBox";
+import { Button } from "../components/Button";
+import { BottomWarning } from "../components/BottomWarning";
+import { SubHeading } from "../components/SubHeading";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  return (
-    
-<div class="bg-white">
-  <div class="flex h-screen flex-col items-center justify-center">
-    <div class="max-h-auto mx-auto max-w-xl">
-      <div class="mb-8 space-y-3">
-        <Heading label={"Sign Up"} />
-        <p class="text-gray-500">Enter your email, and we'll send a code to your inbox. <br />No need for passwords -- like magic!</p>
-      </div>
-      <form class="w-full">
-        <div class="mb-10 space-y-3">
-          <div class="space-y-1">
-            <div class="space-y-2">
-              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="email">Email</label>
-              <input class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="email" placeholder="mail@example.com" name="email" />
-            </div>
-          </div>
-          <button class="ring-offset-background focus-visible:ring-ring flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" type="submit">Login</button>
-        </div>
-      </form>
-      <div class="text-center"> No account? <a class="text-blue-500" href="/signup">Create one</a> </div>
-    </div>
-  </div>
-</div>
-  )
-}
 
-export default Signin
+    const navigate = useNavigate();
+
+    const defaultUser = {
+      username: '',
+      password: ''
+    }
+
+    const [user, setUser] = useState(defaultUser);
+
+    const handleOnChange = (e) => {
+      const {value, name} = e.target;
+      setUser(prev => ({
+        ...prev,
+        [name]: value
+      }))
+    }
+
+    useEffect(() => {
+      const local = localStorage.getItem("token");
+      if(local){
+        navigate("/dashboard")
+      }
+    }, [])
+
+    const handleSubmit = async () => {
+
+      
+      
+      Object.entries(user).map(([l,v],index) => {
+        if(v === undefined || v === ""){
+         return 
+        }
+      })
+
+      const res = await axios.post("http://localhost:5000/app/v1/user/signin", user);
+
+      localStorage.setItem("token", res.data.token)
+      localStorage.setItem("user", res.data.user)
+      navigate("/dashboard")
+    }
+
+
+
+  return (
+    <div className="bg-slate-300 h-screen flex justify-center">
+      <div className="flex flex-col justify-center">
+        <div className="rounded-lg bg-white w-120 text-center p-2 h-max px-8">
+          <Heading label={"Sign In"} />
+          <SubHeading label={"Enter your credentials to access your account"} />
+          <InputBox label={"Email"} placeholder={"udaymaroju9@gmail.com"} name={"username"} onChange={handleOnChange} />
+          <InputBox label={"Password"} placeholder={"1234567"} name={"password"} onChange={handleOnChange} />
+
+          <div className="pt-4">
+            <Button label={"Sign Up"} onClick={handleSubmit} />
+          </div>
+          <BottomWarning
+            label={" Don't have an account?"}
+            buttonText={"Sign Up"}
+            to={"/signin"}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Signin;

@@ -3,11 +3,14 @@ import Signin from "./pages/Signin";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import SendMoney from "./pages/SendMoney";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   return (
     <div>
+      <ToastContainer />
        <BrowserRouter>
         <Routes>
         <Route path="/signin" element={<Signin />} />

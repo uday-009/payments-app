@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Button } from "./Button"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import  UserListItem  from './User'
 
 
 export const Users = () => {
@@ -10,9 +11,9 @@ export const Users = () => {
     const [filter, setFilter] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+        axios.get("http://localhost:5000/app/v1/user/bulk?filter=" + filter)
             .then(response => {
-                setUsers(response.data.user)
+                setUsers(response.data.users)
             })
     }, [filter])
 
@@ -26,7 +27,7 @@ export const Users = () => {
             }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
         </div>
         <div>
-            {users.map(user => <User user={user} />)}
+            {users?.map(user => <UserListItem user={user} />)}
         </div>
     </>
 }

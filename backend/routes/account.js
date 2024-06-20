@@ -24,7 +24,7 @@ const transferSchema = zod.object({
         amount: zod.number()
 })
 
-router.get('/transfer', authMiddleware, async (req, res) => {
+router.post('/transfer', authMiddleware, async (req, res) => {
 
     const { success } = transferSchema.safeParse(req.body);
 
