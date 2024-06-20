@@ -46,7 +46,7 @@ const Signin = () => {
       const res = await axios.post("http://localhost:5000/app/v1/user/signin", user);
 
       localStorage.setItem("token", res.data.token)
-      localStorage.setItem("user", res.data.user)
+      localStorage.setItem("user", JSON.stringify(res.data.user))
       navigate("/dashboard")
     }
 
