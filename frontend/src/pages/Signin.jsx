@@ -66,7 +66,7 @@ const Signin = () => {
           </div>
           <BottomWarning
             label={" Don't have an account?"}
-            buttonText={"Sign Up"}
+            buttonText={"Sign In"}
             to={"/signin"}
           />
         </div>
