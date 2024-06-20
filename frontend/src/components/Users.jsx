@@ -17,7 +17,7 @@ export const Users = () => {
             })
     }, [filter])
 
-    return <>
+    return <div className="flex-grow">
         <div className="font-bold mt-6 text-lg">
             Users
         </div>
@@ -29,7 +29,7 @@ export const Users = () => {
         <div>
             {users?.map(user => <UserListItem user={user} />)}
         </div>
-    </>
+    </div>
 }
 
 function User({user}) {
