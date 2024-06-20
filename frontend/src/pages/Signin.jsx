@@ -62,11 +62,11 @@ const Signin = () => {
           <InputBox label={"Password"} placeholder={"1234567"} name={"password"} onChange={handleOnChange} />
 
           <div className="pt-4">
-            <Button label={"Sign Up"} onClick={handleSubmit} />
+            <Button label={"Sign In"} onClick={handleSubmit} />
           </div>
           <BottomWarning
             label={" Don't have an account?"}
-            buttonText={"Sign In"}
+            buttonText={"Sign Up"}
             to={"/signin"}
           />
         </div>
